@@ -30,13 +30,18 @@ async function getSingleMeal(url) {
     <ul class="ingredients-list"></ul> 
     <div class="meal-category-area">
     <div class=area>
+    <div class=first>
     <h2>Category:</h2>
     <span >${meals.strCategory} </span>
+    </div>
+    <div class=second>
     <h2>Area:</h2>
     <span >${meals.strArea}</span>
     </div>
-   
-     </div>
+    </div>
+
+   </div>
+     
     </div>
     <h2>DIRECTIONS:</h2>
    <p class="directions">${meals.strInstructions}</p>
@@ -69,6 +74,8 @@ async function getSingleMeal(url) {
     load.style.display = "none";
   } catch (err) {
     console.error(err);
+    load.style.display = "none";
+
     renderError(`Something Went Wrong:${err.message}`);
   }
 }
@@ -93,31 +100,34 @@ function init() {
     }
   } catch (err) {
     console.error(err);
-    renderError(`Something Went Wrong:${err.message}`);
+    renderError(`Something Went Wrong:Try Again`);
   }
 }
 
 async function getMeal() {
+  // try {
+  const meal = input.value;
+
+  if (meal.trim() === "") {
+    heading.textContent = `Enter the meal name`;
+  }
+  //else {
   try {
-    const meal = input.value;
+    heading.textContent = `Result for:${meal}`;
 
-    if (meal.trim() === "") {
-      heading.textContent = `Enter the meal name`;
+    const res = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/search.php?s=${meal}`
+    );
+    const data = await res.json();
+    if (!data.meals) {
+      heading.textContent = `There is no Result for:${meal}`;
+      container.innerHTML = `<div class="error"><img src="/try-again.png" alt="Try Again"/></div>`;
     } else {
-      heading.textContent = `Result for:${meal}`;
-      const res = await fetch(
-        `https://www.themealdb.com/api/json/v1/1/search.php?s=${meal}`
-      );
-      const data = await res.json();
-      if (!data.meals) {
-        heading.textContent = `There is no Result for:${meal}`;
-        container.innerHTML = `<div class="error"><img src="/try-again.png" alt="Try Again"/></div>`;
-      } else {
-        sessionStorage.setItem("meal", JSON.stringify(data.meals));
+      sessionStorage.setItem("meal", JSON.stringify(data.meals));
 
-        container.innerHTML = data.meals
-          .map(
-            (item) => ` 
+      container.innerHTML = data.meals
+        .map(
+          (item) => ` 
               
               <div class="meal"  >
           <img src="${item.strMealThumb}" alt="${item.strMeal}" class="meal-image" />
@@ -125,30 +135,41 @@ async function getMeal() {
           </div>
           
           `
-          )
-          .join("");
-      }
+        )
+        .join("");
     }
+
     input.value = "";
     load.style.display = "none";
   } catch (err) {
     console.error(err);
-    renderError(`Something Went Wrong:${err.message}`);
+    load.style.display = "none";
+
+    renderError(`Something Went Wrong:Try Again`);
   }
 }
 
 async function view(e) {
-  try {
-    if (e.target.classList.contains("meal-name")) {
-      const idMeal = e.target.id;
-      const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`;
+  if (e.target.classList.contains("meal-name")) {
+    const idMeal = e.target.id;
+    const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`;
+    try {
       await getSingleMeal(url);
       load.style.display = "none";
+    } catch (err) {
+      console.error(err);
+      load.style.display = "none";
+
+      renderError(`Something Went Wrong:Try Again`);
     }
-  } catch (err) {
-    console.error(err);
-    renderError(`Something Went Wrong:${err.message}`);
   }
+  /*   catch (err) {
+      console.error(err);
+      load.style.display = "none";
+  
+       renderError(`Something Went Wrong:${err.message}`);
+  
+    } */
 }
 
 search.addEventListener("click", () => {

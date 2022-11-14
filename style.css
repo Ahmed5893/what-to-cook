@@ -17,31 +17,28 @@ body {
   background-image: url("https://media.istockphoto.com/id/1220584431/vector/food-and-cooking-seamless-pattern-doodles.jpg?s=612x612&w=0&k=20&c=-cHmygl9sMRX1G1CAr9vQSH8rxMlRD7-F5TAScpIUYg=");
 }
 
-
-
 h1 {
   font-size: 3rem;
   color: rgb(243, 78, 18);
   font-weight: bold;
-  font-family: 'Peralta', cursive;
+  font-family: "Peralta", cursive;
   text-transform: uppercase;
   letter-spacing: 0.3rem;
 }
 
 .loader {
   display: none;
-	position: absolute;
-	left: 0px;
+  position: absolute;
+  left: 0px;
   top: 0px;
-  bottom:0;
-  right:0;
-	width: 100%;
-	height: 100%;
-	z-index: 1000;
-	background: url("https://www.twomato.com/assets/images/loader.gif") center no-repeat rgba(0,0,0,0.6);
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height:150vh;
+  z-index: 1000;
+  background: url("https://www.twomato.com/assets/images/loader.gif") center
+    no-repeat rgba(0, 0, 0, 0.6);
 }
-
-
 
 .search-bar {
   padding: 2rem;
@@ -98,8 +95,7 @@ h1 {
   color: #000;
   letter-spacing: 0.3em;
   font-weight: 900;
-  background-color: rgb(255, 255, 255,0.3);
-
+  background-color: rgb(255, 255, 255, 0.3);
 }
 
 .container {
@@ -110,12 +106,11 @@ h1 {
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 1rem;
   background-image: url("https://images.unsplash.com/photo-1506968430777-bf7784a87f23?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d29vZCUyMHRhYmxlfGVufDB8fDB8fA%3D%3D&w=1000&q=80");
-   background-repeat: no-repeat;
-   background-size: cover;
+  background-repeat: no-repeat;
+  background-size: cover;
   padding: 1rem;
   border-radius: 1rem;
   position: relative;
-
 }
 
 .container .meal-image {
@@ -130,20 +125,20 @@ h1 {
 .error {
   margin: 0 auto;
   animation: tryAgain 3s ease-in-out;
-  transform: translateY(20rem) translateX(20%);
+  transform: translateY(25rem) translateX(30%);
   width: 60rem;
   max-width: 100%;
 }
 
 .error-msg {
-text-align: center;
-font-size: 3rem;
-color: #fff;
-font-weight: 900;
-font-family: Peralta;
-letter-spacing: 0.5rem;
-background-color: rgba(250, 250, 250, 0.2);
-
+  text-align: center;
+  font-size: 3rem;
+  color: #fff;
+  font-weight: 900;
+  font-family: Peralta;
+  letter-spacing: 0.5rem;
+  background-color: rgba(250, 250, 250, 0.2);
+transform: translateY(-5rem) translateX(6rem);
 }
 
 .error img {
@@ -154,7 +149,6 @@ background-color: rgba(250, 250, 250, 0.2);
 .meal {
   position: relative;
   height: fit-content;
-
 }
 
 .meal-name {
@@ -184,12 +178,12 @@ background-color: rgba(250, 250, 250, 0.2);
 @keyframes tryAgain {
   0% {
     opacity: 0;
-    transform: translateY(40rem) translateX(30%);
+    transform: translateY(60rem) translateX(30%);
   }
 
   100% {
     opacity: 0.8;
-    transform: translateY(20rem) translateX(30%);
+    transform: translateY(25rem) translateX(30%);
   }
 }
 
@@ -201,8 +195,12 @@ background-color: rgba(250, 250, 250, 0.2);
   min-height: 100vh;
   margin: 1rem;
   line-height: 3rem;
-  color:#fff;
-  
+  color: #fff;
+}
+
+.directions {
+  width: 100rem;
+  max-width: 100%;
 }
 
 .meal-instruction h2 {
@@ -215,17 +213,15 @@ background-color: rgba(250, 250, 250, 0.2);
 .video {
   width: 60rem;
   max-width: 100%;
-  height:40rem;
+  height: 40rem;
   max-width: 100%;
-transform: translateX(30%);  
- 
+  transform: translateX(30%);
 }
 .video iframe {
   width: 100%;
   height: 100%;
   border: 2px solid #000;
   border-radius: 3rem;
-
 }
 
 #btn-back {
@@ -250,25 +246,22 @@ transform: translateX(30%);
   border: 0;
 }
 
-
- .meal-container {
+.meal-container {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
   width: 80rem;
   max-width: 100%;
-} 
-
-.title{
-text-align: left;
-color:rgb(255, 34, 0);
-font-weight: 400;
-font-size:4rem;
-padding: 2rem 2rem;
-
 }
 
-
+.title {
+  text-align: left;
+  color: rgb(255, 34, 0);
+  font-weight: 400;
+  font-size: 4rem;
+  padding: 2rem 2rem;
+  line-height: 4rem;
+}
 
 /* .meal-category-area {
   display: flex;
@@ -284,28 +277,27 @@ padding: 2rem 2rem;
   padding-top: 1rem;
 font-size: 2rem;
 } */
-.area{
-  display:flex;
+.area {
+  display: flex;
   flex-direction: row;
   margin-top: 3rem;
   position: absolute;
   right: 4rem;
-  top: 5rem;
+  top: 6rem;
   transform: translate(1rem, -2rem);
   padding-top: 1rem;
-font-size: 2rem;
+  font-size: 2rem;
 }
 
 .meal-category-area h2 {
   border: 0;
   display: inline-block;
-  color:#fff;
+  color: #fff;
   font-family: "Courier New", Courier, monospace;
   text-transform: uppercase;
   padding: 1rem;
   font-size: 3rem;
   font-weight: 400;
-
 }
 
 .meal-category-area span {
@@ -314,20 +306,17 @@ font-size: 2rem;
   font-weight: bold;
   font-size: 2rem;
   margin-top: 2rem;
-  padding:0.5rem 1rem 0 0;
+  padding: 0.5rem 1rem 0 0;
 }
 
 @media screen and (max-width: 767px) {
-  body{
-  scroll-behavior: smooth;
+  body {
+    scroll-behavior: smooth;
   }
 
-   h1{
-  text-align: center;
-
-
+  h1 {
+    text-align: center;
   }
-
 
   .message {
     position: absolute;
@@ -341,7 +330,7 @@ font-size: 2rem;
     background-color: rgba(255, 255, 255, 0.3);
     visibility: hidden;
     font-weight: bold;
-    right:0;
+    right: 0;
   }
 
   .search-result {
@@ -352,8 +341,7 @@ font-size: 2rem;
     color: #000;
     letter-spacing: 0.1em;
     font-weight: 900;
-    background-color: rgb(250, 250, 250,0.6);
-  
+    background-color: rgb(250, 250, 250, 0.6);
   }
   /* .error {
     transform: translateX(-1rem) translateY(25rem);
@@ -371,7 +359,7 @@ font-size: 2rem;
 
   .container {
     min-height: 100vh;
-    height:fit-content;
+    height: fit-content;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 1rem;
@@ -379,50 +367,42 @@ font-size: 2rem;
     padding: 1rem;
     border-radius: 1rem;
     position: relative;
-
   }
-
- 
 
   .meal-instruction {
     padding: 1rem 0;
-    width:60rem;
-   
+    width: 60rem;
   }
-  
 
   .meal-instruction h2 {
     transform: translateX(1rem);
-
   }
 
-  .directions{
-  width:29rem
-
+  .directions {
+    width: 29rem;
   }
-  
+
   .title {
     font-size: 2rem;
     margin-top: 1rem;
     font-weight: bold;
-    width:30rem;
+    width: 30rem;
   }
 
   .video {
     width: 30rem;
-    height:25rem;
+    height: 25rem;
     max-width: 100%;
-   transform: translateX(-1rem);  
-    
+    transform: translateX(-1rem);
   }
-  .area{
-   display:none;
+  .area {
+    display: none;
   }
 
   .error {
     margin: 0 auto;
     animation: tryAgain 3s ease-in-out;
-    transform: translateY(25rem) translateX(0%);
+    transform: translateY(35rem) translateX(0%);
     width: 30rem;
   }
 
@@ -433,26 +413,73 @@ font-size: 2rem;
     font-weight: 900;
     font-family: Peralta;
     letter-spacing: 0.1rem;
-   margin-left: 1rem;
-   background-color: rgba(255, 255, 255, 0.3);
-}
-.error img {
-  width: 60rem;
-  max-width: 100%;
-}
+    margin-left: 1rem;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  .error img {
+    width: 60rem;
+    max-width: 100%;
+  }
 
-
-
-    @keyframes tryAgain {
-      0% {
-        opacity: 0;
-        transform: translateY(40rem) translateX(0%);
-      }
-    
-      100% {
-        opacity: 0.8;
-        transform: translateY(25rem) translateX(0%);
-      }
+  @keyframes tryAgain {
+    0% {
+      opacity: 0;
+      transform: translateY(40rem) translateX(0%);
     }
 
+    100% {
+      opacity: 0.8;
+      transform: translateY(35rem) translateX(0%);
+    }
+  }
+}
+
+@media only screen and (min-width: 750px) and (max-width: 900px) {
+  .directions{
+    width:60rem
+  
+    }
+
+  .error {
+    margin: 0 auto;
+    animation: tryAgain 3s ease-in-out;
+    transform: translateY(30rem) translateX(30%);
+    width: 45rem;
+  }
+
+  .video {
+    width: 60rem;
+    max-width: 100%;
+    height: 40rem;
+    max-width: 100%;
+    transform: translateX(10%);
+  }
+
+  .area {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: start;
+    justify-content:center;
+    position: absolute;
+    margin-top: 1rem;
+    right: 2rem;
+    top: 6rem;
+  
+    padding-top: 1rem;
+    font-size: 2rem;
+    width: fit-content;
+  }
+
+  @keyframes tryAgain {
+    0% {
+      opacity: 0;
+      transform: translateY(60rem) translateX(30%);
+    }
+
+    100% {
+      opacity: 0.8;
+      transform: translateY(30rem) translateX(30%);
+    }
+  }
 }
