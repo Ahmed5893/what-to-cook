@@ -130,9 +130,20 @@ h1 {
 .error {
   margin: 0 auto;
   animation: tryAgain 3s ease-in-out;
-  transform: translateY(20rem) translateX(30%);
+  transform: translateY(20rem) translateX(20%);
   width: 60rem;
   max-width: 100%;
+}
+
+.error-msg {
+text-align: center;
+font-size: 3rem;
+color: #fff;
+font-weight: 900;
+font-family: Peralta;
+letter-spacing: 0.5rem;
+background-color: rgba(250, 250, 250, 0.2);
+
 }
 
 .error img {
@@ -279,7 +290,7 @@ font-size: 2rem;
   margin-top: 3rem;
   position: absolute;
   right: 4rem;
-  top: 0;
+  top: 5rem;
   transform: translate(1rem, -2rem);
   padding-top: 1rem;
 font-size: 2rem;
@@ -314,12 +325,41 @@ font-size: 2rem;
    h1{
   text-align: center;
 
+
   }
-  .error {
+
+
+  .message {
+    position: absolute;
+    display: block;
+    width: 10rem;
+    height: 5rem;
+    font-size: 1.5rem;
+    transform: translateX(0);
+    transform: translateY(-8rem);
+    padding-top: 1rem;
+    background-color: rgba(255, 255, 255, 0.3);
+    visibility: hidden;
+    font-weight: bold;
+    right:0;
+  }
+
+  .search-result {
+    padding: 1rem 0;
+    font-size: 1.5rem;
+    font-family: Peralta;
+    text-transform: capitalize;
+    color: #000;
+    letter-spacing: 0.1em;
+    font-weight: 900;
+    background-color: rgb(250, 250, 250,0.6);
+  
+  }
+  /* .error {
     transform: translateX(-1rem) translateY(25rem);
     width: 350px;
     animation: none;
-  }
+  } */
   #btn-back {
     width: 8rem;
     text-align: right;
@@ -357,7 +397,7 @@ font-size: 2rem;
   }
 
   .directions{
-  width:36rem
+  width:29rem
 
   }
   
@@ -365,18 +405,54 @@ font-size: 2rem;
     font-size: 2rem;
     margin-top: 1rem;
     font-weight: bold;
+    width:30rem;
   }
 
   .video {
-    width: 35rem;
+    width: 30rem;
+    height:25rem;
     max-width: 100%;
-    height:20rem;
-    max-width: 100%;
-   transform: translateX(0%);  
+   transform: translateX(-1rem);  
     
   }
   .area{
    display:none;
   }
+
+  .error {
+    margin: 0 auto;
+    animation: tryAgain 3s ease-in-out;
+    transform: translateY(25rem) translateX(0%);
+    width: 30rem;
+  }
+
+  .error-msg {
+    text-align: center;
+    font-size: 2rem;
+    color: red;
+    font-weight: 900;
+    font-family: Peralta;
+    letter-spacing: 0.1rem;
+   margin-left: 1rem;
+   background-color: rgba(255, 255, 255, 0.3);
+}
+.error img {
+  width: 60rem;
+  max-width: 100%;
+}
+
+
+
+    @keyframes tryAgain {
+      0% {
+        opacity: 0;
+        transform: translateY(40rem) translateX(0%);
+      }
+    
+      100% {
+        opacity: 0.8;
+        transform: translateY(25rem) translateX(0%);
+      }
+    }
 
 }

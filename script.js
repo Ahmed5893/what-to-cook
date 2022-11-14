@@ -7,12 +7,21 @@ const input = document.getElementById("input");
 const heading = document.querySelector(".search-result");
 const load = document.querySelector(".loader");
 
+function renderError(msg) {
+  container.innerHTML = `<div class="error">
+  <div class="error-msg">${msg}</div>
+  </div>
+
+`;
+}
+
 async function getSingleMeal(url) {
-  const res = await fetch(url);
-  const data = await res.json();
-  const meals = await data.meals[0];
-  console.log(meals);
-  container.innerHTML = ` 
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    const meals = await data.meals[0];
+    console.log(meals);
+    container.innerHTML = ` 
     <div class="meal-instruction">
     <h1 class="title">${meals.strMeal}</h1>
     <button id='btn-back'>Back</button>
@@ -33,41 +42,45 @@ async function getSingleMeal(url) {
    <p class="directions">${meals.strInstructions}</p>
    <h2>VIDEO:</h2>
    <div class="video"> <iframe src='${meals.strYoutube.replace(
-    /watch[?]v=/g,
-    "embed/"
-  )}' allow="fullscreen">
+     /watch[?]v=/g,
+     "embed/"
+   )}' allow="fullscreen">
   </iframe>
    </div>
    </div>
    
    `;
-  
-   
-  const btn = document.getElementById("btn-back");
-  btn.addEventListener("click", () => {
-    location.reload();
-  });
-  const ul = document.querySelector(".ingredients-list");
-  const ingredients = [];
 
-  for (let i = 1; i <= 20; i++) {
-    if (meals[`strIngredient${i}`]) {
-      ingredients.push(
-        `${meals[`strIngredient${i}`]} - ${meals[`strMeasure${i}`]}`
-      );
-    } else break;
+    const btn = document.getElementById("btn-back");
+    btn.addEventListener("click", () => {
+      location.reload();
+    });
+    const ul = document.querySelector(".ingredients-list");
+    const ingredients = [];
+
+    for (let i = 1; i <= 20; i++) {
+      if (meals[`strIngredient${i}`]) {
+        ingredients.push(
+          `${meals[`strIngredient${i}`]} - ${meals[`strMeasure${i}`]}`
+        );
+      } else break;
+    }
+    ul.innerHTML = ingredients.map((item) => `<li>${item}</li>`).join("");
+    load.style.display = "none";
+  } catch (err) {
+    console.error(err);
+    renderError(`Something Went Wrong:${err.message}`);
   }
-  ul.innerHTML = ingredients.map((item) => `<li>${item}</li>`).join("");
-  load.style.display = "none";
 }
 
 init();
 function init() {
-  const meals = JSON.parse(sessionStorage.getItem("meal"));
-  if (meals !== null && meals.length > 0) {
-    container.innerHTML = meals
-      .map(
-        (item) => ` 
+  try {
+    const meals = JSON.parse(sessionStorage.getItem("meal"));
+    if (meals !== null && meals.length > 0) {
+      container.innerHTML = meals
+        .map(
+          (item) => ` 
     
     <div class="meal"  >
 <img src="${item.strMealThumb}" alt="${item.strMeal}" class="meal-image" />
@@ -75,31 +88,36 @@ function init() {
 </div>
 
 `
-      )
-      .join("");
+        )
+        .join("");
+    }
+  } catch (err) {
+    console.error(err);
+    renderError(`Something Went Wrong:${err.message}`);
   }
 }
 
 async function getMeal() {
-  const meal = input.value;
+  try {
+    const meal = input.value;
 
-  if (meal.trim() === "") {
-    heading.textContent = `Enter the meal name`;
-  } else {
-    heading.textContent = `Result for:${meal}`;
-    const res = await fetch(
-      `https://www.themealdb.com/api/json/v1/1/search.php?s=${meal}`
-    );
-    const data = await res.json();
-    if (!data.meals) {
-      heading.textContent = `There is no Result for:${meal}`;
-      container.innerHTML = `<div class="error"><img src="/try-again.png" alt="Try Again"/></div>`;
+    if (meal.trim() === "") {
+      heading.textContent = `Enter the meal name`;
     } else {
-      sessionStorage.setItem("meal", JSON.stringify(data.meals));
+      heading.textContent = `Result for:${meal}`;
+      const res = await fetch(
+        `https://www.themealdb.com/api/json/v1/1/search.php?s=${meal}`
+      );
+      const data = await res.json();
+      if (!data.meals) {
+        heading.textContent = `There is no Result for:${meal}`;
+        container.innerHTML = `<div class="error"><img src="/try-again.png" alt="Try Again"/></div>`;
+      } else {
+        sessionStorage.setItem("meal", JSON.stringify(data.meals));
 
-      container.innerHTML = data.meals
-        .map(
-          (item) => ` 
+        container.innerHTML = data.meals
+          .map(
+            (item) => ` 
               
               <div class="meal"  >
           <img src="${item.strMealThumb}" alt="${item.strMeal}" class="meal-image" />
@@ -107,31 +125,41 @@ async function getMeal() {
           </div>
           
           `
-        )
-        .join("");
+          )
+          .join("");
+      }
     }
+    input.value = "";
+    load.style.display = "none";
+  } catch (err) {
+    console.error(err);
+    renderError(`Something Went Wrong:${err.message}`);
   }
-  input.value = "";
-  load.style.display = "none";
 }
 
 async function view(e) {
-  if (e.target.classList.contains("meal-name")) {
-    const idMeal = e.target.id;
-    const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`;
-    await getSingleMeal(url);
-    load.style.display = "none";
+  try {
+    if (e.target.classList.contains("meal-name")) {
+      const idMeal = e.target.id;
+      const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`;
+      await getSingleMeal(url);
+      load.style.display = "none";
+    }
+  } catch (err) {
+    console.error(err);
+    renderError(`Something Went Wrong:${err.message}`);
   }
-
 }
 
 search.addEventListener("click", () => {
   load.style.display = "block";
   getMeal();
 });
-container.addEventListener("click", (e) => { if (e.target.classList.contains("meal-name")) {
-  load.style.display = "block";
-  view(event);}
+container.addEventListener("click", (e) => {
+  if (e.target.classList.contains("meal-name")) {
+    load.style.display = "block";
+    view(event);
+  }
 });
 
 random.addEventListener("click", () => {
