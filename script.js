@@ -105,14 +105,15 @@ function init() {
 }
 
 async function getMeal() {
-  // try {
   const meal = input.value;
-
+  try {
   if (meal.trim() === "") {
     heading.textContent = `Enter the meal name`;
+    load.style.display = "none";
+    return;
   }
-  //else {
-  try {
+
+ 
     heading.textContent = `Result for:${meal}`;
 
     const res = await fetch(
