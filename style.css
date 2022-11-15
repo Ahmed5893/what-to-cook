@@ -402,7 +402,7 @@ font-size: 2rem;
   .error {
     margin: 0 auto;
     animation: tryAgain 3s ease-in-out;
-    transform: translateY(35rem) translateX(0%);
+    transform: translateY(45rem) translateX(0%);
     width: 30rem;
   }
 
@@ -424,12 +424,12 @@ font-size: 2rem;
   @keyframes tryAgain {
     0% {
       opacity: 0;
-      transform: translateY(40rem) translateX(0%);
+      transform: translateY(60rem) translateX(0%);
     }
 
     100% {
       opacity: 0.8;
-      transform: translateY(35rem) translateX(0%);
+      transform: translateY(45rem) translateX(0%);
     }
   }
 }
