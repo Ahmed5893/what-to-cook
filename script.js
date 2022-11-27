@@ -1,5 +1,6 @@
 "use strict";
 
+//Selecting Dom Elements
 const container = document.querySelector(".container");
 const search = document.getElementById("search");
 const random = document.getElementById("random");
@@ -7,6 +8,36 @@ const input = document.getElementById("input");
 const heading = document.querySelector(".search-result");
 const load = document.querySelector(".loader");
 
+//Call init function to display previous search result
+init();
+
+//All App Functions
+
+//1-Init Function
+function init() {
+  try {
+    const meals = JSON.parse(sessionStorage.getItem("meal"));
+    if (meals !== null && meals.length > 0) {
+      container.innerHTML = meals
+        .map(
+          (item) => ` 
+    
+    <div class="meal"  >
+<img src="${item.strMealThumb}" alt="${item.strMeal}" class="meal-image" />
+<div class="meal-name" id="${item.idMeal}">${item.strMeal}</div>
+</div>
+
+`
+        )
+        .join("");
+    }
+  } catch (err) {
+    console.error(err);
+    renderError(`Something Went Wrong:Try Again`);
+  }
+}
+
+//2-Error Handle Function
 function renderError(msg) {
   container.innerHTML = `<div class="error">
   <div class="error-msg">${msg}</div>
@@ -14,6 +45,54 @@ function renderError(msg) {
 
 `;
 }
+
+//3-Fetch the data from the API function to get a  meal
+async function getMeal() {
+  const meal = input.value;
+  try {
+    if (meal.trim() === "") {
+      heading.textContent = `Enter the meal name`;
+      load.style.display = "none";
+      return;
+    }
+
+    heading.textContent = `Result for:${meal}`;
+
+    const res = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/search.php?s=${meal}`
+    );
+    const data = await res.json();
+    if (!data.meals) {
+      heading.textContent = `There is no Result for:${meal}`;
+      container.innerHTML = `<div class="error"><img src="/try-again.png" alt="Try Again"/></div>`;
+    } else {
+      sessionStorage.setItem("meal", JSON.stringify(data.meals));
+
+      container.innerHTML = data.meals
+        .map(
+          (item) => ` 
+              
+              <div class="meal"  >
+          <img src="${item.strMealThumb}" alt="${item.strMeal}" class="meal-image" />
+          <div class="meal-name" id="${item.idMeal}">${item.strMeal}</div>
+          </div>
+          
+          `
+        )
+        .join("");
+    }
+
+    input.value = "";
+    load.style.display = "none";
+  } catch (err) {
+    console.error(err);
+    load.style.display = "none";
+
+    renderError(`Something Went Wrong:Try Again`);
+  }
+}
+
+//4-Fetch the data from the API function to get a single meal
 
 async function getSingleMeal(url) {
   try {
@@ -56,10 +135,12 @@ async function getSingleMeal(url) {
    
    `;
 
+    //Back Button Handle
     const btn = document.getElementById("btn-back");
     btn.addEventListener("click", () => {
       location.reload();
     });
+    //Meal Ingredient List Handle
     const ul = document.querySelector(".ingredients-list");
     const ingredients = [];
 
@@ -80,77 +161,8 @@ async function getSingleMeal(url) {
   }
 }
 
-init();
-function init() {
-  try {
-    const meals = JSON.parse(sessionStorage.getItem("meal"));
-    if (meals !== null && meals.length > 0) {
-      container.innerHTML = meals
-        .map(
-          (item) => ` 
-    
-    <div class="meal"  >
-<img src="${item.strMealThumb}" alt="${item.strMeal}" class="meal-image" />
-<div class="meal-name" id="${item.idMeal}">${item.strMeal}</div>
-</div>
-
-`
-        )
-        .join("");
-    }
-  } catch (err) {
-    console.error(err);
-    renderError(`Something Went Wrong:Try Again`);
-  }
-}
-
-async function getMeal() {
-  const meal = input.value;
-  try {
-  if (meal.trim() === "") {
-    heading.textContent = `Enter the meal name`;
-    load.style.display = "none";
-    return;
-  }
-
- 
-    heading.textContent = `Result for:${meal}`;
-
-    const res = await fetch(
-      `https://www.themealdb.com/api/json/v1/1/search.php?s=${meal}`
-    );
-    const data = await res.json();
-    if (!data.meals) {
-      heading.textContent = `There is no Result for:${meal}`;
-      container.innerHTML = `<div class="error"><img src="/try-again.png" alt="Try Again"/></div>`;
-    } else {
-      sessionStorage.setItem("meal", JSON.stringify(data.meals));
-
-      container.innerHTML = data.meals
-        .map(
-          (item) => ` 
-              
-              <div class="meal"  >
-          <img src="${item.strMealThumb}" alt="${item.strMeal}" class="meal-image" />
-          <div class="meal-name" id="${item.idMeal}">${item.strMeal}</div>
-          </div>
-          
-          `
-        )
-        .join("");
-    }
-
-    input.value = "";
-    load.style.display = "none";
-  } catch (err) {
-    console.error(err);
-    load.style.display = "none";
-
-    renderError(`Something Went Wrong:Try Again`);
-  }
-}
-
-async function view(e) {
+//5-Select a meal Function
+async function selectedMeal(e) {
   if (e.target.classList.contains("meal-name")) {
     const idMeal = e.target.id;
     const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`;
@@ -164,26 +176,25 @@ async function view(e) {
       renderError(`Something Went Wrong:Try Again`);
     }
   }
-  /*   catch (err) {
-      console.error(err);
-      load.style.display = "none";
-  
-       renderError(`Something Went Wrong:${err.message}`);
-  
-    } */
 }
 
+//Event Listener Handle
+
+//Search for a meal event
 search.addEventListener("click", () => {
   load.style.display = "block";
   getMeal();
 });
+
+//Select a meal event
 container.addEventListener("click", (e) => {
   if (e.target.classList.contains("meal-name")) {
     load.style.display = "block";
-    view(event);
+    selectedMeal(event);
   }
 });
 
+//Get a random meal event
 random.addEventListener("click", () => {
   load.style.display = "block";
   const url = `https://www.themealdb.com/api/json/v1/1/random.php`;
